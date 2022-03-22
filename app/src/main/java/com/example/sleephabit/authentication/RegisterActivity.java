@@ -1,15 +1,15 @@
 package com.example.sleephabit.authentication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.sleephabit.R;
-import com.example.sleephabit.model.login;
+import com.example.sleephabit.model.Login;
 
 public class RegisterActivity extends AppCompatActivity {
     Button register;
@@ -20,7 +20,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        login log = new login(email, password, username);
+        Login login = new Login();
 
         register = findViewById(R.id.register);
         username = findViewById(R.id.username);
@@ -30,9 +30,11 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View v){
-             log.username = username.getText().toString();
-             log.password = password.getText().toString();
-             log.email = email.getText().toString();
+             login.setUsername(username.getText().toString());
+             login.setPassword(password.getText().toString());
+             login.setEmail(email.getText().toString());
+
+             login.save();
 
                Toast.makeText(RegisterActivity.this, "email:" +email + "password:" + password, Toast.LENGTH_LONG).show();
            }
