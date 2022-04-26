@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sleephabit.R;
-import com.example.sleephabit.model.Login;
 import com.example.sleephabit.navigator.Navigator;
 
 
