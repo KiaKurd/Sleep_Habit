@@ -22,6 +22,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        initializeComponents();
+    }
+
+
+    private void initializeComponents(){
+
         loginbtn = findViewById(R.id.login);
         register = findViewById(R.id.register);
         email = findViewById(R.id.email);
@@ -33,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 if (email.getText().toString() == null || password.getText().toString() == null ) {
-                        Toast.makeText(LoginActivity.this, "email or password is required", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "email or password is required", Toast.LENGTH_LONG).show();
                 }
                 else{
                     if(email.getText().toString() == login.getEmail() & password.getText().toString() == login.getPassword()){
@@ -52,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-              int  page = 1;
+                int  page = 1;
                 switch (page){
                     case 1:{
 
@@ -63,11 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
     }
 
 
