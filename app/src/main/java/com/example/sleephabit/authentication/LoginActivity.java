@@ -2,7 +2,6 @@ package com.example.sleephabit.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,12 +9,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sleephabit.R;
-import com.example.sleephabit.navigator.Navigator;
+import com.example.sleephabit.model.User;
+import com.example.sleephabit.navigator.BottomNav;
+import com.example.sleephabit.retrofit.RetrofitService;
+import com.example.sleephabit.retrofit.UserApi;
 
 
 public class LoginActivity extends AppCompatActivity {
-    Button loginbtn, register;
-    EditText email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,46 +28,37 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initializeComponents(){
 
-        loginbtn = findViewById(R.id.login);
+        Button login, register;
+        EditText inputEmail, inputPassword;
+
+        login = findViewById(R.id.login);
         register = findViewById(R.id.register);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
 
-        Login login = null;
+        RetrofitService retrofitService = new RetrofitService();
+        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
 
-        loginbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                if (email.getText().toString() == null || password.getText().toString() == null ) {
-                    Toast.makeText(LoginActivity.this, "email or password is required", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    if(email.getText().toString() == login.getEmail() & password.getText().toString() == login.getPassword()){
-                        Intent intent = new Intent(LoginActivity.this, Navigator.class);
-                        startActivity(intent);
+        login.setOnClickListener(view -> {
+            String email = String.valueOf(inputEmail.getText());
+            String password = String.valueOf(inputPassword.getText());
 
-                    }else{
-                        Toast.makeText(LoginActivity.this, "wrong eamil or password ",Toast.LENGTH_LONG).show();
-                    }
-                }
+            User user = new User();
+            String checkEmail = user.getEmail();
+            String checkPassword = user.getPassword();
 
-                Toast.makeText(LoginActivity.this, "email:" +email + "password:" + password, Toast.LENGTH_LONG).show();
-            };
+            if (checkPassword == password && checkEmail == email){
+                Intent intent = new Intent(LoginActivity.this, BottomNav.class );
+                startActivity(intent);
+                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(LoginActivity.this, "Email or Password is wrong", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        register.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                int  page = 1;
-                switch (page){
-                    case 1:{
-
-                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                        startActivity(intent);
-                        break;
-                    }
-                }
-            }
+        register.setOnClickListener(View ->{
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
     }
 

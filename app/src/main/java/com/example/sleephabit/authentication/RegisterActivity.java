@@ -1,5 +1,6 @@
 package com.example.sleephabit.authentication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sleephabit.R;
 import com.example.sleephabit.model.User;
+import com.example.sleephabit.navigator.BottomNav;
 import com.example.sleephabit.retrofit.RetrofitService;
 import com.example.sleephabit.retrofit.UserApi;
 
@@ -20,8 +22,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
-    Button register;
-    EditText inputUserName,inputEmail,inputPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initializeComponents() {
+
+        Button register;
+        EditText inputUserName,inputEmail,inputPassword;
 
         register = findViewById(R.id.register);
         inputUserName = findViewById(R.id.username);
@@ -52,11 +55,14 @@ public class RegisterActivity extends AppCompatActivity {
               user.setPassword(password);
               user.setEmail(email);
 
+
               userApi.save(user)
                       .enqueue(new Callback<User>() {
                           @Override
                           public void onResponse(Call<User> call, Response<User> response){
                               Toast.makeText(RegisterActivity.this, "Save Successfull!", Toast.LENGTH_SHORT).show();
+                              Intent intent = new Intent(RegisterActivity.this, BottomNav.class);
+                              startActivity(intent);
                           }
 
                           @Override
