@@ -2,6 +2,8 @@ package com.example.sleephabit.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,17 +37,20 @@ public class RegisterActivity extends AppCompatActivity {
     private void initializeComponents() {
 
         Button register;
-        EditText inputUserName,inputEmail,inputPassword;
+        EditText inputUserName, inputEmail, inputPassword, inputConfirmPassword;
 
         register = findViewById(R.id.register);
         inputUserName = findViewById(R.id.username);
         inputPassword = findViewById(R.id.password);
+        inputConfirmPassword = findViewById(R.id.confirmPassword);
         inputEmail = findViewById(R.id.email);
 
         RetrofitService retrofitService = new RetrofitService();
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
 
         register.setOnClickListener(view -> {
+
+            if (checkDataEntered(inputUserName, inputEmail, inputPassword, inputConfirmPassword)){
               String username = String.valueOf(inputUserName.getText());
               String email = String.valueOf(inputEmail.getText());
               String password = String.valueOf(inputPassword.getText());
@@ -72,6 +77,24 @@ public class RegisterActivity extends AppCompatActivity {
                           }
 
                       });
-        });
+        } });
     }
+
+   private Boolean checkDataEntered(EditText userName,EditText email,EditText password, EditText confirmPassword){
+        Boolean boo;
+        if ( TextUtils.isEmpty(email.getText().toString()) || !(Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) ) {
+            Toast.makeText(RegisterActivity.this, "Unvalid Email", Toast.LENGTH_SHORT).show();
+            boo = false;
+        }else if (TextUtils.isEmpty(userName.getText().toString())){
+            Toast.makeText(RegisterActivity.this, "Username is required", Toast.LENGTH_SHORT
+            ).show();
+            boo = false;
+        }else if (TextUtils.isEmpty(password.getText().toString()) || password != confirmPassword ){
+            Toast.makeText(RegisterActivity.this, "password is required", Toast.LENGTH_SHORT).show();
+            boo = false;
+        }else boo = true;
+
+        return boo;
+    }
+
 }

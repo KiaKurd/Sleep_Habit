@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sleephabit.R;
+import com.example.sleephabit.navigator.homeFragment.HomeFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 
@@ -20,7 +21,6 @@ public class BottomNav extends AppCompatActivity implements  NavigationBarView.O
         setContentView(R.layout.activity_bottom_nav);
 
        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
        bottomNavigationView.setOnItemSelectedListener(this);
        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
     }

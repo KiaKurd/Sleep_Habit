@@ -2,6 +2,8 @@ package com.example.sleephabit.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -40,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
 
         login.setOnClickListener(view -> {
+            if (checkDataEntered(inputEmail, inputPassword)) {
+
             String email = String.valueOf(inputEmail.getText());
             String password = String.valueOf(inputPassword.getText());
 
@@ -54,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(LoginActivity.this, "Email or Password is wrong", Toast.LENGTH_SHORT).show();
             }
-        });
+        }});
 
         register.setOnClickListener(View ->{
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -62,6 +66,17 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private Boolean checkDataEntered(EditText email,EditText password){
+        Boolean boo;
+        if ( TextUtils.isEmpty(email.getText().toString()) || !(Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) ) {
+            Toast.makeText(LoginActivity.this, "Unvalid Email", Toast.LENGTH_SHORT).show();
+            boo = false;
+        }else if (TextUtils.isEmpty(password.getText().toString())){
+            Toast.makeText(LoginActivity.this, "password is required", Toast.LENGTH_SHORT).show();
+            boo = false;
+        }else boo = true;
 
+        return boo;
+    }
 }
 
