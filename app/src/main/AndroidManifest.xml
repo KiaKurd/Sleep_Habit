@@ -32,10 +32,6 @@
             android:name=".navigator.BottomNav"
             android:exported="false" />
         <activity
-            android:name=".navigator.Navigator"
-            android:exported="false"
-            android:label="@string/title_activity_navigator" />
-        <activity
             android:name=".authentication.LoginActivity"
             android:exported="true">
             <intent-filter>

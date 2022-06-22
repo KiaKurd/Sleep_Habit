@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sleephabit.ExceptionHandler.ExceptionHandler;
 import com.example.sleephabit.R;
 import com.example.sleephabit.model.User;
 import com.example.sleephabit.navigator.BottomNav;
@@ -19,6 +20,7 @@ import com.example.sleephabit.retrofit.UserApi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
 
         initializeComponents();
 
@@ -81,20 +85,23 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
    private Boolean checkDataEntered(EditText userName,EditText email,EditText password, EditText confirmPassword){
-        Boolean boo;
+
         if ( TextUtils.isEmpty(email.getText().toString()) || !(Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) ) {
             Toast.makeText(RegisterActivity.this, "Unvalid Email", Toast.LENGTH_SHORT).show();
-            boo = false;
+            return false;
         }else if (TextUtils.isEmpty(userName.getText().toString())){
             Toast.makeText(RegisterActivity.this, "Username is required", Toast.LENGTH_SHORT
             ).show();
-            boo = false;
+            return false;
         }else if (TextUtils.isEmpty(password.getText().toString()) || password != confirmPassword ){
             Toast.makeText(RegisterActivity.this, "password is required", Toast.LENGTH_SHORT).show();
-            boo = false;
-        }else boo = true;
+            return false;
+        }else return true;
+    }
 
-        return boo;
+
+    public void onFailure(Call<ResponseBody> call, Throwable t){
+        Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
 }

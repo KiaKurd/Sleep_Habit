@@ -9,11 +9,18 @@
         android:id="@+id/navigation_home"
         android:name="com.example.sleephabit.navigator.homeFragment.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/RecyclerViewCardLayout" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.sleephabit.navigator.ProfileFragment"
         android:label="@string/title_Profile"
         tools:layout="@layout/fragment_profile" />
+
+
+    <fragment
+        android:id="@+id/navigation_record"
+        android:name="com.example.sleephabit.navigator.RecordFragment"
+        android:label="@string/title_record"
+        tools:layout="@layout/fragment_record" />
 </navigation>

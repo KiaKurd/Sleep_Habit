@@ -30,7 +30,7 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.Viewholder> {
     @Override
     public TipAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         // to inflate the layout for each item of recycler view.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.RecyclerViewCardLayout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
         return new Viewholder(view);
     }
 
