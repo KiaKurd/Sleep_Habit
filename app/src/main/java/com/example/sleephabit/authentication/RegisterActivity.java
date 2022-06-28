@@ -65,18 +65,18 @@ public class RegisterActivity extends AppCompatActivity {
               user.setEmail(email);
 
 
-              userApi.save(user)
+              userApi.register(user)
                       .enqueue(new Callback<User>() {
                           @Override
                           public void onResponse(Call<User> call, Response<User> response){
-                              Toast.makeText(RegisterActivity.this, "Save Successfull!", Toast.LENGTH_SHORT).show();
+                              Toast.makeText(RegisterActivity.this, "Register Successfull!", Toast.LENGTH_SHORT).show();
                               Intent intent = new Intent(RegisterActivity.this, BottomNav.class);
                               startActivity(intent);
                           }
 
                           @Override
                           public void onFailure(Call<User> call, Throwable t ){
-                              Toast.makeText(RegisterActivity.this, "Save Failed!", Toast.LENGTH_SHORT).show();
+                              Toast.makeText(RegisterActivity.this, "Register Failed!", Toast.LENGTH_SHORT).show();
                               Logger.getLogger(RegisterActivity.class.getName()).log(Level.SEVERE, "Error occurred", t);
                           }
 
@@ -87,16 +87,19 @@ public class RegisterActivity extends AppCompatActivity {
    private Boolean checkDataEntered(EditText userName,EditText email,EditText password, EditText confirmPassword){
 
         if ( TextUtils.isEmpty(email.getText().toString()) || !(Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) ) {
-            Toast.makeText(RegisterActivity.this, "Unvalid Email", Toast.LENGTH_SHORT).show();
+            email.setError("Unvalid Email");
             return false;
         }else if (TextUtils.isEmpty(userName.getText().toString())){
-            Toast.makeText(RegisterActivity.this, "Username is required", Toast.LENGTH_SHORT
-            ).show();
+            userName.setError("Username is required");
             return false;
-        }else if (TextUtils.isEmpty(password.getText().toString()) || password != confirmPassword ){
-            Toast.makeText(RegisterActivity.this, "password is required", Toast.LENGTH_SHORT).show();
+        }else if (TextUtils.isEmpty(password.getText().toString())){
+            password.setError("password is required");
             return false;
-        }else return true;
+        }else if (TextUtils.isEmpty(confirmPassword.getText().toString()) || (confirmPassword.getText().toString() == password.getText().toString())) {
+            confirmPassword.setError("your passwords does not match");
+            return false;
+        }
+        else return true;
     }
 
 

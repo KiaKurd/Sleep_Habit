@@ -1,6 +1,7 @@
 package com.example.sleephabit.navigator.homeFragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,16 +39,19 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        try {
+            // Inflate the layout for this fragment
 
 
-        recyclerView = recyclerView.findViewById(R.id.card_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(bottomNav));
+            recyclerView = recyclerView.findViewById(R.id.card_recyclerView);
+            recyclerView.setLayoutManager(new LinearLayoutManager(bottomNav));
 
 
-
-
-        return inflater.inflate(R.layout.fragment_home, container, false);
+            return inflater.inflate(R.layout.fragment_home, container, false);
+        }catch(Exception e){
+            Log.e("on Home Fragment onCraet",e.toString());
+            throw e;
+        }
     }
 
     //Loading TipsDescription from server and Sending data to recycler view
@@ -103,4 +107,5 @@ public class HomeFragment extends Fragment {
         loadTipsDescription();
         loadTag();
     }
+
 }

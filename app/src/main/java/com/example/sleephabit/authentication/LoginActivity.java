@@ -17,15 +17,12 @@ import com.example.sleephabit.navigator.BottomNav;
 import com.example.sleephabit.retrofit.RetrofitService;
 import com.example.sleephabit.retrofit.UserApi;
 
-import java.util.List;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         Button login, register;
 
         login = findViewById(R.id.login);
-        register = findViewById(R.id.register);
+        register = findViewById(R.id.toRegister);
 
 
         login.setOnClickListener(view -> {
@@ -61,41 +58,44 @@ public class LoginActivity extends AppCompatActivity {
 
         EditText inputEmail, inputPassword;
 
-        inputEmail = findViewById(R.id.email);
-        inputPassword = findViewById(R.id.password);
+        inputEmail = findViewById(R.id.loginEmail);
+        inputPassword = findViewById(R.id.loginPassword);
 
 
         if (checkDataEntered(inputEmail, inputPassword)) {
 
-            String email = String.valueOf(inputEmail);
-            String password =String.valueOf(inputPassword);
+            String email = inputEmail.getText().toString();
+            String password = inputPassword.getText().toString();
 
             RetrofitService retrofitService = new RetrofitService();
             UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
-            userApi.getAllUsers().enqueue(new Callback<List<User>>() {
-                @Override
-                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                    List<User> users = response.body();
-//                    User user
-                }
-
-                @Override
-                public void onFailure(Call<List<User>> call, Throwable t) {
-
-                }
-            });
 
             User user = new User();
             String checkEmail = user.getEmail();
             String checkPassword = user.getPassword();
 
-            if (checkPassword == password && checkEmail == email){
+//            userApi.login(checkEmail,checkPassword)
+//                    .enqueue(new Callback<User>(){
+//
+//
+//                        @Override
+//                        public void onResponse(Call<User> call, Response<User> response) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<User> call, Throwable t) {
+//
+//                        }
+//                    });
+
+
+            if (true){
                 Intent intent = new Intent(LoginActivity.this, BottomNav.class );
                 startActivity(intent);
                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(LoginActivity.this, "Email or Password is wrong", Toast.LENGTH_SHORT).show();
-            } }
+            }
+        }
     }
 
 
@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isPasswordRight(EditText password){
         if (TextUtils.isEmpty(password.getText().toString())){
-            Toast.makeText(LoginActivity.this, "password is required", Toast.LENGTH_SHORT).show();
+           password.setError("password is required");
            return false;}else return true;
     }
 
