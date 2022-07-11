@@ -89,9 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
         if ( TextUtils.isEmpty(email.getText().toString()) || !(Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) ) {
             email.setError("Unvalid Email");
             return false;
-        }else if (TextUtils.isEmpty(userName.getText().toString())){
-            userName.setError("Username is required");
-            return false;
         }else if (TextUtils.isEmpty(password.getText().toString())){
             password.setError("password is required");
             return false;

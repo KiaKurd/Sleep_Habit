@@ -60,6 +60,5 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.Viewholder> {
             tagTV = itemView.findViewById(R.id.tipsTag);
             descriptionTV = itemView.findViewById(R.id.tipsDescription);
         }
-
     }
 }

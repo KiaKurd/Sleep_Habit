@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sleephabit.R;
 import com.example.sleephabit.model.Tag;
 import com.example.sleephabit.model.TipsDescription;
-import com.example.sleephabit.navigator.BottomNav;
 import com.example.sleephabit.retrofit.RetrofitService;
 import com.example.sleephabit.retrofit.TagApi;
 import com.example.sleephabit.retrofit.TipsDescriptionApi;
@@ -30,7 +29,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
      RecyclerView recyclerView;
-     BottomNav bottomNav;
+
     public HomeFragment() {
         // require a empty public constructor
          }
@@ -39,22 +38,22 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        try {
+
             // Inflate the layout for this fragment
+        try {
+            View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+            recyclerView = view.findViewById(R.id.card_recyclerView);
+            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-            recyclerView = recyclerView.findViewById(R.id.card_recyclerView);
-            recyclerView.setLayoutManager(new LinearLayoutManager(bottomNav));
-
-
-            return inflater.inflate(R.layout.fragment_home, container, false);
-        }catch(Exception e){
-            Log.e("on Home Fragment onCraet",e.toString());
+            return view;
+        }catch (Exception e){
+            Log.e("on Home fragment", e.toString());
             throw e;
         }
     }
 
-    //Loading TipsDescription from server and Sending data to recycler view
+    //Loading TipsDescription from server and Sending the data to recycler view
     private void loadTipsDescription() {
         RetrofitService retrofit = new RetrofitService();
         TipsDescriptionApi tipsDescriptionApi = retrofit.getRetrofit().create(TipsDescriptionApi.class);
@@ -75,9 +74,10 @@ public class HomeFragment extends Fragment {
         TipAdapter tipAdapter = new TipAdapter(null ,tipsDescriptionsList);
         recyclerView.setAdapter(tipAdapter);
     }
+    //Ending of Loading TipsDescription from server and Sending the data to recycler view
 
 
-    //Loading Tag from server and Sending data to recycler view
+    //Loading Tag from server and Sending the data to recycler view
     private void loadTag() {
         RetrofitService retrofit = new RetrofitService();
         TagApi tagApi = retrofit.getRetrofit().create(TagApi.class);
@@ -98,8 +98,7 @@ public class HomeFragment extends Fragment {
         TipAdapter tipAdapter = new TipAdapter(tagList, null);
         recyclerView.setAdapter(tipAdapter);
     }
-
-
+    //Ending of Loading Tag from server and Sending the data to recycler view
 
     @Override
     public void onResume() {

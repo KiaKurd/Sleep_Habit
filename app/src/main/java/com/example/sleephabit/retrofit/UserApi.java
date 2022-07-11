@@ -16,10 +16,10 @@ public interface UserApi {
     @POST("/user/save")
     Call<User> save(@Body User user);
 
-    @POST("/user/register")
+    @POST("/user/auth/register")
     Call<User> register(@Body User user);
 
-    @GET("/user/login")
-    Call<User> login(@Body String email, String password);
+    @GET("/user/auth/login")
+    Call<User> login(@Body User user);
 
 }
